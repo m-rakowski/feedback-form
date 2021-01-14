@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {FeedbackForm} from './model/feedback-form';
 import {IFormGroup, IFormBuilder} from '@rxweb/types';
-import {CustomValidators} from './custom-validators';
+import {CustomValidators} from './validators/custom-validators';
 
 @Component({
   selector: 'app-feedback-form',
@@ -19,16 +19,16 @@ export class FeedbackFormComponent implements OnInit {
     this.formBuilder = formBuilder;
   }
 
-  // Name should be longer than 5 characters and not contain a number
   // Company Name should not be empty
+  // Name should be longer than 5 characters and not contain a number
   // Job Title should not be empty
   // Years in current role should not be empty, should be an integer >0 and <50
   // What do you like about marketing corp should not be empty
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group<FeedbackForm>({
-      name: [null, [Validators.required, Validators.minLength(6), CustomValidators.shouldNotContainNumbers()]],
       companyName: [null, [Validators.required]],
+      name: [null, [Validators.required, Validators.minLength(6), CustomValidators.shouldNotContainNumbers()]],
       jobTitle: [null, [Validators.required]],
       yearsInCurrentRole: [null, [Validators.required, CustomValidators.shouldBeInteger(), Validators.min(1), Validators.max(49)]],
       comment: [null, [Validators.required]]
