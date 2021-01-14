@@ -1,0 +1,12 @@
+<h2>Let us know what you think!</h2>
+
+<form [formGroup]="formGroup" (submit)="send()" class="feedback-form">
+  <app-custom-input label="Name" [control]="formGroup.get('name')"></app-custom-input>
+  <app-custom-input label="Company Name" [control]="formGroup.get('companyName')"></app-custom-input>
+  <app-custom-input label="Job Title" [control]="formGroup.get('jobTitle')"></app-custom-input>
+  <app-custom-input label="Years in current role" [control]="formGroup.get('yearsInCurrentRole')"></app-custom-input>
+  <app-custom-input label="What do you like about marketing corp" [control]="formGroup.get('comment')"
+                    [isTextArea]="true"></app-custom-input>
+
+  <button mat-button type="submit">Submit</button>
+</form>
