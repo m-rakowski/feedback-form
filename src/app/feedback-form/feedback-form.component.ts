@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {FeedbackForm} from './model/feedback-form';
+import {IFormGroup, IFormBuilder} from '@rxweb/types';
+import {CustomValidators} from './custom-validators';
 
 @Component({
   selector: 'app-feedback-form',
@@ -9,10 +12,11 @@ import {Router} from '@angular/router';
 })
 export class FeedbackFormComponent implements OnInit {
 
+  formGroup: IFormGroup<FeedbackForm>;
+  formBuilder: IFormBuilder;
 
-  formGroup: FormGroup;
-
-  constructor(private router: Router) {
+  constructor(private router: Router, formBuilder: FormBuilder) {
+    this.formBuilder = formBuilder;
   }
 
   // Name should be longer than 5 characters and not contain a number
@@ -22,12 +26,24 @@ export class FeedbackFormComponent implements OnInit {
   // What do you like about marketing corp should not be empty
 
   ngOnInit(): void {
-    this.formGroup = new FormGroup({
-      name: new FormControl(null, [Validators.required, Validators.maxLength(5)]),
-      companyName: new FormControl(null, [Validators.required]),
-      jobTitle: new FormControl(null, [Validators.required]),
-      yearsInCurrentRole: new FormControl(null, []),
-      comment: new FormControl(null, [Validators.required]),
+    this.formGroup = this.formBuilder.group<FeedbackForm>({
+      name: [null, [Validators.required, Validators.minLength(6), CustomValidators.shouldNotContainNumbers()]],
+      companyName: [null, [Validators.required]],
+      jobTitle: [null, [Validators.required]],
+      yearsInCurrentRole: [null, [Validators.required, CustomValidators.shouldBeInteger(), Validators.min(1), Validators.max(49)]],
+      comment: [null, [Validators.required]]
+    });
+
+    this.formGroup.controls.companyName.valueChanges.subscribe((value) => {
+      if (value === 'example') {
+        this.formGroup.setValue({
+          name: 'Example INC CEO',
+          companyName: 'Example INC',
+          comment: 'example inc comment',
+          jobTitle: 'example job title',
+          yearsInCurrentRole: 10
+        });
+      }
     });
   }
 
@@ -35,6 +51,7 @@ export class FeedbackFormComponent implements OnInit {
     if (this.formGroup.invalid) {
       this.formGroup.markAllAsTouched();
     } else {
+      console.log(this.formGroup.value);
       this.router.navigate(['thankyou'], {queryParams: {companyName: this.formGroup.get('companyName').value}});
     }
   }

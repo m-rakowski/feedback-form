@@ -1,4 +1,8 @@
-.feedback-form {
+.button-footer {
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
+  .submit-button {
+    display: block;
+  }
+
 }

@@ -2,6 +2,6 @@ export interface FeedbackForm {
   name: string;
   companyName: string;
   jobTitle: string;
-  yearsInCurrentRole: string;
+  yearsInCurrentRole: number;
   comment: string;
 }

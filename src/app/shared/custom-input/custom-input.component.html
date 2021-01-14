@@ -10,5 +10,11 @@
     [formControl]="control"
     cdkTextareaAutosize
     cdkAutosizeMinRows="1"></textarea>
+
   <mat-error *ngIf="control.hasError('required')">Field is required</mat-error>
+  <mat-error *ngIf="control.hasError('min')">Number should be greater than {{control.errors.min.min - 1}}</mat-error>
+  <mat-error *ngIf="control.hasError('max')">Number should be less than  {{control.errors.max.max + 1}}</mat-error>
+  <mat-error *ngIf="control.hasError('shouldBeInteger')">Value should be a number</mat-error>
+  <mat-error *ngIf="control.hasError('minlength')">Minimum length
+    is {{control.errors.minLength.requiredLength}}</mat-error>
 </mat-form-field>
