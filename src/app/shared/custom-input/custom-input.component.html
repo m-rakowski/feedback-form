@@ -1,6 +1,14 @@
 <mat-form-field>
   <mat-label>{{label}}</mat-label>
-  <input matInput [formControl]="control" *ngIf="!isTextArea"/>
-  <textarea matInput [formControl]="control" *ngIf="isTextArea"></textarea>
+  <input
+    *ngIf="!isTextArea"
+    matInput
+    [formControl]="control"/>
+  <textarea
+    *ngIf="isTextArea"
+    matInput
+    [formControl]="control"
+    cdkTextareaAutosize
+    cdkAutosizeMinRows="1"></textarea>
   <mat-error *ngIf="control.hasError('required')">Field is required</mat-error>
 </mat-form-field>
