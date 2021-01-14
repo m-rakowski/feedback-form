@@ -32,6 +32,10 @@ export class FeedbackFormComponent implements OnInit {
   }
 
   send(): void {
-    this.router.navigate(['thankyou'], {queryParams: {companyName: this.formGroup.get('companyName').value}});
+    if (this.formGroup.invalid) {
+      this.formGroup.markAllAsTouched();
+    } else {
+      this.router.navigate(['thankyou'], {queryParams: {companyName: this.formGroup.get('companyName').value}});
+    }
   }
 }

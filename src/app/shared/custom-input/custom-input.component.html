@@ -1,6 +1,6 @@
 <mat-form-field>
   <mat-label>{{label}}</mat-label>
   <input matInput [formControl]="control" *ngIf="!isTextArea"/>
-  <textarea matInput [formControl]="control"*ngIf="isTextArea"></textarea>
+  <textarea matInput [formControl]="control" *ngIf="isTextArea"></textarea>
   <mat-error *ngIf="control.hasError('required')">Field is required</mat-error>
 </mat-form-field>
